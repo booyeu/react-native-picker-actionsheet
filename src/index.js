@@ -46,7 +46,7 @@ export default class extends React.Component{
       ]).start(()=>!this.props.show&&this.state.show?this.setState({show:false}):null);
     return(
       this.state.show?<View style={styles.container}>
-        <TouchableWithoutFeedback onPress={()=>this.props.onCancel()}>
+        <TouchableWithoutFeedback onPress={()=>this.props.onSubmit()}>
           <Animated.View style={[styles.masker,{opacity:this.state.maskerOpacity}]} />
         </TouchableWithoutFeedback>
         <Animated.View style={[styles.item_container,{
