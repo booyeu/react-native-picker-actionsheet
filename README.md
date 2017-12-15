@@ -9,9 +9,9 @@ npm install react-native-picker-actionsheet --save
 ## Usage
 
 ```javascript
-import AlertInput from 'react-native-picker-actionsheet';
+import PickerActionSheet from 'react-native-picker-actionsheet';
 
-<AlertInput />
+<PickerActionSheet />
 ```
 
 ## Example
