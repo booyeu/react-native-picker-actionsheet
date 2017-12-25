@@ -22,8 +22,6 @@ export default class extends React.Component{
     this.flag=true;
   }
   render(){
-    if(this.props.show&&!this.state.show)
-      this.setState({show:true});
     let item=[];
     for(let i=0;i<this.props.data.length;i++)
       item.push(this.props.renderItem({item:this.props.data[i],index:i}));
@@ -43,9 +41,9 @@ export default class extends React.Component{
             duration: this.props.show ? 200 : 160
           }
         )
-      ]).start(()=>!this.props.show&&this.state.show?this.setState({show:false}):null);
+      ]).start(()=>this.state.show!==this.props.show?this.setState({show:this.props.show}):null);
     return(
-      this.state.show?<View style={styles.container}>
+      <View style={[styles.container,{zIndex:this.state.show||this.props.show?100:-100}]}>
         <TouchableWithoutFeedback onPress={()=>this.props.onSubmit()}>
           <Animated.View style={[styles.masker,{opacity:this.state.maskerOpacity}]} />
         </TouchableWithoutFeedback>
@@ -67,7 +65,7 @@ export default class extends React.Component{
             {item}
           </View>
         </Animated.View>
-      </View>:null
+      </View>
     );
   }
 }
