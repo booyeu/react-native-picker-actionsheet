@@ -16,16 +16,12 @@ export default class extends React.Component{
   constructor(props){
     super(props);
     this.state={maskerOpacity:new Animated.Value(this.props.show?.5:0),bottomPosition:new Animated.Value(this.props.show?1:0),show:this.props.show};
-    this.flag=false;
-  }
-  componentDidMount() {
-    this.flag=true;
   }
   render(){
     let item=[];
     for(let i=0;i<this.props.data.length;i++)
       item.push(this.props.renderItem({item:this.props.data[i],index:i}));
-    if(this.flag)
+    if(this.state.show!==this.props.show)
       Animated.parallel([
         Animated.timing(
           this.state.maskerOpacity,
