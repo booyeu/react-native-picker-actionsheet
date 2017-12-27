@@ -37,7 +37,7 @@ export default class extends React.Component{
             duration: this.props.show ? 200 : 160
           }
         )
-      ]).start(()=>this.state.show!==this.props.show?this.setState({show:this.props.show}):null);
+      ]).start(()=>this.setState({show:this.props.show}));
     return(
       <View style={[styles.container,{zIndex:this.state.show||this.props.show?100:-100}]}>
         <TouchableWithoutFeedback onPress={()=>this.props.onSubmit()}>
