@@ -15,7 +15,7 @@ export default class extends React.Component{
   };
   constructor(props){
     super(props);
-    this.state={maskerOpacity:new Animated.Value(this.props.show?.5:0),bottomPosition:new Animated.Value(this.props.show?1:0),show:this.props.show};
+    this.state={maskerOpacity:new Animated.Value(this.props.show?.5:0),bottomPosition:new Animated.Value(this.props.show?1:0),show:!this.props.show};
   }
   render(){
     let item=[];
