@@ -26,6 +26,7 @@ import PickerActionSheet from 'react-native-picker-actionsheet';
 | show | false | yes | Controller whether or not show it |
 | height | 120 | yes | The height of the container,you have to change it for your requirement |
 | title | '' | no | The title text of the container |
+| titleRight | null | no | The compoment on the right hand of title |
 | data | [] | no | The data you give users to picker |
 | renderItem | ({item,index})=>{} | no | Function that shows data | 
 | onCancel | ()=>{} | no | Function that is called when user cancels it |
