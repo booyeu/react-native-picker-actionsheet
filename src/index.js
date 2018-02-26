@@ -6,6 +6,7 @@ export default class extends React.Component{
     show:false,
     height:120,
     title:'',
+		titleRight:null,
     data:[],
     renderItem:({})=>{},
     cancelText:'cancel',
@@ -54,7 +55,10 @@ export default class extends React.Component{
         }]}>
           <View style={styles.item_top}>
             <Text style={styles.item_top_btn} onPress={()=>this.props.onCancel()}>{this.props.cancelText}</Text>
-            <Text style={styles.item_top_title}>{this.props.title}</Text>
+						<View style={styles.item_top_title_container}>
+            	<Text style={styles.item_top_title}>{this.props.title}</Text>
+							{this.props.titleRight}
+						</View>
             <Text style={styles.item_top_btn} onPress={()=>this.props.onSubmit()}>{this.props.submitText}</Text>
           </View>
           <View style={styles.items}>
@@ -100,6 +104,10 @@ const styles=StyleSheet.create({
     fontWeight:'bold',
     fontSize:14
   },
+	item_top_title_container:{
+		flexDirection:'row',
+		alignItems:'center'
+	},
   item_top_title:{
     fontSize:16,
     fontWeight:'bold',
