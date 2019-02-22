@@ -1,18 +1,19 @@
 import React from 'react';
-import {StyleSheet,Animated,View,Text,TouchableWithoutFeedback} from 'react-native';
+import {StyleSheet,Animated,Modal,View,ScrollView,Text,TouchableWithoutFeedback,Dimensions} from 'react-native';
 
 export default class extends React.Component{
   static defaultProps={
     show:false,
     height:120,
     title:'',
-		titleRight:null,
+    titleRight:null,
     data:[],
     renderItem:({})=>{},
     cancelText:'cancel',
     submitText:'submit',
+    onSubmit:()=>{},
     onCancel:()=>{},
-    onSubmit:()=>{}
+    shadowClick:'submit'
   };
   constructor(props){
     super(props);
@@ -40,8 +41,8 @@ export default class extends React.Component{
         )
       ]).start(()=>this.setState({show:this.props.show}));
     return(
-      <View style={[styles.container,{zIndex:this.state.show||this.props.show?100:-100}]}>
-        <TouchableWithoutFeedback onPress={()=>this.props.onSubmit()}>
+	    this.state.show||this.props.show?<Modal transparent={true} onRequestClose={()=>this.props.onCancel()}>
+        <TouchableWithoutFeedback onPress={()=>this.props.shadowClick==='submit'?this.props.onSubmit():this.props.onCancel()}>
           <Animated.View style={[styles.masker,{opacity:this.state.maskerOpacity}]} />
         </TouchableWithoutFeedback>
         <Animated.View style={[styles.item_container,{
@@ -61,25 +62,20 @@ export default class extends React.Component{
 						</View>
             <Text style={styles.item_top_btn} onPress={()=>this.props.onSubmit()}>{this.props.submitText}</Text>
           </View>
-          <View style={styles.items}>
-            {item}
-          </View>
+					{item.length>0?this.props.scrollEnabled?
+						<ScrollView style={styles.items_scroll}>
+							{item}
+						</ScrollView>:
+						<View style={styles.items}>
+							{item}
+						</View>:this.props.ListEmptyComponent}
         </Animated.View>
-      </View>
+      </Modal>:null
     );
   }
 }
 
 const styles=StyleSheet.create({
-  container:{
-    flex:1,
-    position:'absolute',
-    top:0,
-    bottom:0,
-    left:0,
-    right:0,
-    zIndex:100
-  },
   masker:{
     backgroundColor:'#000',
     flex:1
@@ -116,9 +112,13 @@ const styles=StyleSheet.create({
   items:{
     flex:1,
     flexDirection:'row',
-    justifyContent:'center',
+    justifyContent:'space-around',
     alignItems:'center',
     flexWrap:'wrap',
     backgroundColor:'#f9f9f9'
-  }
+  },
+	items_scroll:{
+  	paddingVertical:6,
+		backgroundColor:'#f9f9f9'
+	}
 });
