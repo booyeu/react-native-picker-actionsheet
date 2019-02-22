@@ -33,3 +33,4 @@ import PickerActionSheet from 'react-native-picker-actionsheet';
 | onSubmit | (text)=>{} | no | Function that is called when user submits it |
 | cancelText | 'cancel' | no | The string that is displayed on the cancel button |
 | submitText | 'submit' | no | The string that is displayed on the submit button |
+| shadowClick | 'submit' | no | The string that is 'cancel' or 'submit' when shadow is clicked |
