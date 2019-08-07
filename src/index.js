@@ -1,52 +1,4 @@
-import React from 'react';
-import {StyleSheet,Animated,Modal,View,ScrollView,Text,TouchableWithoutFeedback,Dimensions} from 'react-native';
-
-export default class extends React.Component{
-  static defaultProps={
-    show:false,
-    height:120,
-    title:'',
-    titleRight:null,
-    data:[],
-    renderItem:({})=>{},
-    cancelText:'cancel',
-    submitText:'submit',
-    onSubmit:()=>{},
-    onCancel:()=>{},
-    shadowClick:'submit'
-  };
-  constructor(props){
-    super(props);
-    this.state={maskerOpacity:new Animated.Value(this.props.show?.5:0),bottomPosition:new Animated.Value(this.props.show?1:0),show:!this.props.show};
-  }
-  render(){
-    let item=[];
-    for(let i=0;i<this.props.data.length;i++)
-      item.push(this.props.renderItem({item:this.props.data[i],index:i}));
-    if(this.state.show!==this.props.show)
-      Animated.parallel([
-        Animated.timing(
-          this.state.maskerOpacity,
-          {
-            toValue: this.props.show ? .5 : 0,
-            duration: this.props.show ? 200 : 160
-          }
-        ),
-        Animated.timing(
-          this.state.bottomPosition,
-          {
-            toValue:this.props.show?1:0,
-            duration: this.props.show ? 200 : 160
-          }
-        )
-      ]).start(()=>this.setState({show:this.props.show}));
-    return(
-	    this.state.show||this.props.show?<Modal transparent={true} onRequestClose={()=>this.props.onCancel()}>
-        <TouchableWithoutFeedback onPress={()=>this.props.shadowClick==='submit'?this.props.onSubmit():this.props.onCancel()}>
-          <Animated.View style={[styles.masker,{opacity:this.state.maskerOpacity}]} />
-        </TouchableWithoutFeedback>
-        <Animated.View style={[styles.item_container,{
-          height:this.props.height,
+  
           transform:[{
             translateY:this.state.bottomPosition.interpolate({
               inputRange:[0,1],
@@ -100,10 +52,10 @@ const styles=StyleSheet.create({
     fontWeight:'bold',
     fontSize:14
   },
-	item_top_title_container:{
-		flexDirection:'row',
-		alignItems:'center'
-	},
+  item_top_title_container:{
+    flexDirection:'row',
+    alignItems:'center'
+  },
   item_top_title:{
     fontSize:16,
     fontWeight:'bold',
@@ -117,8 +69,8 @@ const styles=StyleSheet.create({
     flexWrap:'wrap',
     backgroundColor:'#f9f9f9'
   },
-	items_scroll:{
-  	paddingVertical:6,
-		backgroundColor:'#f9f9f9'
-	}
+  items_scroll:{
+    paddingVertical:6,
+    backgroundColor:'#f9f9f9'
+  }
 });
