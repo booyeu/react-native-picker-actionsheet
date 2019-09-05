@@ -29,6 +29,7 @@ import PickerActionSheet from 'react-native-picker-actionsheet';
 | titleRight | null | no | The compoment on the right hand of title |
 | data | [] | no | The data you give users to picker |
 | renderItem | ({item,index})=>{} | no | Function that shows data | 
+| renderFooter | ()=>{} | no | Function that shows footer | 
 | onCancel | ()=>{} | no | Function that is called when user cancels it |
 | onSubmit | (text)=>{} | no | Function that is called when user submits it |
 | cancelText | 'cancel' | no | The string that is displayed on the cancel button |
