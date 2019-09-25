@@ -60,7 +60,7 @@ export default class extends React.PureComponent{
           }]
         }]}>
           <View style={styles.item_top}>
-            <Text style={styles.item_top_btn} onPress={this.cancelF}>{this.props.cancelText}</Text>
+            <Text style={[styles.item_top_btn,{left:12,right:'auto'}]} onPress={this.cancelF}>{this.props.cancelText}</Text>
 						<View style={styles.item_top_title_container}>
             	<Text style={styles.item_top_title}>{this.props.title}</Text>
 							{this.props.titleRight}
@@ -94,17 +94,19 @@ const styles=StyleSheet.create({
   },
   item_top:{
     flexDirection:'row',
-    justifyContent:'space-between',
+    justifyContent:'center',
     alignItems:'center',
-    padding:12,
+    paddingVertical:12,
     borderColor:'#ddd',
     borderBottomWidth:.5,
     backgroundColor:'#f3f3f3'
   },
   item_top_btn:{
-    color:'#666',
+    color:'#888',
     fontWeight:'bold',
-    fontSize:14
+    fontSize:12,
+    position:'absolute',
+    right:12
   },
 	item_top_title_container:{
 		flexDirection:'row',
