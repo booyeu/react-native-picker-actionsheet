@@ -64,8 +64,8 @@ export default class extends React.PureComponent {
         ]).start(() => this.setState({show: this.props.show})),
       );
     }
-    return this.state.show || this.props.show
-      ? ((
+    return this.state.show || this.props.show ? (
+      <View>
         <Modal transparent={true} onRequestClose={this.cancelF}>
           <TouchableWithoutFeedback onPress={this.shadowF}>
             <Animated.View
@@ -120,8 +120,9 @@ export default class extends React.PureComponent {
             {this.props.renderFooter && this.props.renderFooter()}
           </Animated.View>
         </Modal>
-      ): null)
-      : null;
+      </View>
+
+    ) : null;
   }
 }
 
