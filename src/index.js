@@ -26,6 +26,7 @@ export default class extends React.PureComponent {
     onMask: undefined,
     shadowClick: 'submit',
     renderFooter: null,
+    showHeader: true,
   };
   constructor(props) {
     super(props);
@@ -34,20 +35,21 @@ export default class extends React.PureComponent {
       bottomPosition: new Animated.Value(props.show ? 1 : 0),
       show: props.show,
     };
-    this.cancelF = () => props.onCancel();
-    this.shadowF = () =>
-      props.onMask
-        ? props.onMask()
-        : props.shadowClick === 'submit'
-        ? props.onSubmit()
-        : props.onCancel();
-    this.submitF = () => props.onSubmit();
+  }
+  cancelF = () => {
+    this.props.onCancel();
+  }
+  submitF = () => {
+    this.props.onSubmit();
+  }
+  shadowF = () => {
+    this.props.onMask
+      ? this.props.onMask()
+      : this.props.shadowClick === 'submit'
+        ? this.props.onSubmit()
+        : this.props.onCancel();
   }
   render() {
-    let item = [];
-    for (let i = 0; i < this.props.data.length; i++) {
-      item.push(this.props.renderItem({item: this.props.data[i], index: i}));
-    }
     if (this.state.show !== this.props.show) {
       requestAnimationFrame(() =>
         Animated.parallel([
@@ -64,65 +66,59 @@ export default class extends React.PureComponent {
         ]).start(() => this.setState({show: this.props.show})),
       );
     }
-    return this.state.show || this.props.show ? (
-      <View>
-        <Modal transparent={true} onRequestClose={this.cancelF}>
-          <TouchableWithoutFeedback onPress={this.shadowF}>
-            <Animated.View
-              style={[styles.masker, {opacity: this.state.maskerOpacity}]}
-            />
-          </TouchableWithoutFeedback>
-          <Animated.View
-            style={[
-              styles.item_container,
-              {
-                height: this.props.height + this.props.bottom,
-                paddingBottom: this.props.bottom,
-                transform: [
-                  {
-                    translateY: this.state.bottomPosition.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [this.props.height, 0],
-                    }),
-                  },
-                ],
-              },
-              this.props.containerStyle,
-            ]}>
-            <View style={[styles.item_top, this.props.topStyle]}>
-              <Text
-                style={[styles.item_top_btn, {left: 12, right: 'auto'}]}
-                onPress={this.cancelF}>
-                {this.props.cancelText}
-              </Text>
-              <TouchableWithoutFeedback onPress={this.props.titlePress}>
-                <View style={styles.item_top_title_container}>
-                  <Text
-                    style={[styles.item_top_title, this.props.titleStyle]}>
-                    {this.props.title}
-                  </Text>
-                  {this.props.titleRight}
-                </View>
-              </TouchableWithoutFeedback>
-              <Text style={styles.item_top_btn} onPress={this.submitF}>
-                {this.props.submitText}
-              </Text>
-            </View>
-            {item.length > 0 ? (
-              this.props.scrollEnabled ? (
-                <ScrollView style={styles.items_scroll}>{item}</ScrollView>
-              ) : (
-                <View style={styles.items}>{item}</View>
-              )
-            ) : (
-              this.props.ListEmptyComponent
-            )}
-            {this.props.renderFooter && this.props.renderFooter()}
-          </Animated.View>
-        </Modal>
-      </View>
-
-    ) : null;
+    return (
+      <Modal transparent={true} onRequestClose={this.cancelF} visible={this.state.show || this.props.show}>
+        <TouchableWithoutFeedback onPress={this.shadowF}>
+          <Animated.View style={[styles.masker, {opacity: this.state.maskerOpacity}]} />
+        </TouchableWithoutFeedback>
+        {this.props.maskerChildren}
+        <Animated.View
+          style={[
+            styles.item_container,
+            {
+              height: this.props.height + this.props.bottom,
+              paddingBottom: this.props.bottom,
+              transform: [
+                {
+                  translateY: this.state.bottomPosition.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [this.props.height, 0],
+                  }),
+                },
+              ],
+            },
+            this.props.containerStyle,
+          ]}>
+          {this.props.showHeader ? <View style={[styles.item_top, this.props.topStyle]}>
+            <Text
+              style={[styles.item_top_btn, {left: 12, right: 'auto'}]}
+              onPress={this.cancelF}>
+              {this.props.cancelText}
+            </Text>
+            <TouchableWithoutFeedback onPress={this.props.titlePress}>
+              <View style={styles.item_top_title_container}>
+                <Text
+                  style={[styles.item_top_title, this.props.titleStyle]}>
+                  {this.props.title}
+                </Text>
+                {this.props.titleRight}
+              </View>
+            </TouchableWithoutFeedback>
+            <Text style={styles.item_top_btn} onPress={this.submitF}>
+              {this.props.submitText}
+            </Text>
+          </View> : null}
+          {this.props.children ? this.props.children : ( item.length > 0 ? (
+            <ScrollView style={styles.items_scroll} scrollEnabled={this.props.scrollEnabled}>
+              {this.props.data.map(this.props.renderItem)}
+            </ScrollView>
+          ) : (
+            this.props.ListEmptyComponent
+          ))}
+          {this.props.renderFooter && this.props.renderFooter()}
+        </Animated.View>
+      </Modal>
+    );
   }
 }
 
