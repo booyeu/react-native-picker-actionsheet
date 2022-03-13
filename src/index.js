@@ -108,10 +108,16 @@ export default class extends React.PureComponent {
               {this.props.submitText}
             </Text>
           </View> : null}
-          {this.props.children ? this.props.children : ( item.length > 0 ? (
-            <ScrollView style={styles.items_scroll} scrollEnabled={this.props.scrollEnabled}>
-              {this.props.data.map(this.props.renderItem)}
-            </ScrollView>
+          {this.props.children ? this.props.children : ( this.props.data.length > 0 ? (
+            this.props.scrollEnabled ? (
+              <ScrollView style={styles.items_scroll}>
+                {this.props.data.map(this.props.renderItem)}
+              </ScrollView>
+            ) : (
+              <View style={styles.items}>
+                {this.props.data.map(this.props.renderItem)}
+              </View>
+            )
           ) : (
             this.props.ListEmptyComponent
           ))}
