@@ -1,16 +1,13 @@
 {
   "name": "react-native-picker-actionsheet",
-  "version": "1.4.2",
+  "version": "2.0.0",
   "description": "A picker like ActionSheet component which can be used in iOS & Android . Use Animated . ",
   "main": "src/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BooYeu/react-native-picker-actionsheet.git"
   },
-	 "keywords": [
+  "keywords": [
     "react-native",
     "react-native-picker-actionsheet"
   ],
@@ -20,11 +17,12 @@
     "url": "https://github.com/BooYeu/react-native-picker-actionsheet/issues"
   },
   "homepage": "https://github.com/BooYeu/react-native-picker-actionsheet#readme",
-	"devDependencies": {
-    "pre-commit": "^1.1.3",
-    "react": "^16.0.0-beta.5",
-    "react-dom": "^16.0.0-beta.5",
-    "react-native": "^0.49.3",
-    "react-test-renderer": "^16.0.0-beta.5"
+  "devDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
   }
 }
